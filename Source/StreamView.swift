@@ -51,9 +51,9 @@ class StreamViewLayer: CALayer {
     }
 }
 
-final class StreamView: UIScrollView {
+public class StreamView: UIScrollView {
     
-    override class var layerClass: AnyClass {
+    override public class var layerClass: AnyClass {
         return StreamViewLayer.self
     }
     
@@ -69,7 +69,7 @@ final class StreamView: UIScrollView {
     
     weak var dataSource: StreamViewDataSource?
     
-    override var contentInset: UIEdgeInsets  {
+    override public var contentInset: UIEdgeInsets  {
         didSet {
             if oldValue != contentInset && items.count == 1 && layout.finalized {
                 reload()
@@ -115,7 +115,7 @@ final class StreamView: UIScrollView {
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -339,7 +339,7 @@ final class StreamView: UIScrollView {
         }
     }
     
-    override func touchesShouldCancel(in view: UIView) -> Bool {
+    override public func touchesShouldCancel(in view: UIView) -> Bool {
         return true
     }
 }
