@@ -11,6 +11,8 @@ import UIKit
 
 open class StreamLayout {
     
+    public init() {}
+    
     open var horizontal: Bool { return false }
     
     open var offset: CGFloat = 0
