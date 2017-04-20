@@ -44,7 +44,7 @@ public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     }
 }
 
-class EntryStreamReusableView<T: Any>: StreamReusableView {
+public class EntryStreamReusableView<T: Any>: StreamReusableView {
     
     public init() {
         super.init(frame: CGRect.zero)
@@ -68,12 +68,11 @@ class EntryStreamReusableView<T: Any>: StreamReusableView {
         }
     }
     
-    func setup(entry: T) {
-    }
+    public func setup(entry: T) {}
     
-    func setupEmpty() {}
+    public func setupEmpty() {}
     
-    override func resetup() {
+    override public func resetup() {
         if let entry = entry {
             setup(entry: entry)
         } else {
