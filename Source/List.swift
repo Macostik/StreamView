@@ -8,16 +8,16 @@
 
 import Foundation
 
-class List<T: Equatable> {
+public class List<T: Equatable> {
     
-    var sorter: (_ lhs: T, _ rhs: T) -> Bool = { _ in return true }
+    public var sorter: (_ lhs: T, _ rhs: T) -> Bool = { _ in return true }
     
-    convenience init(sorter: @escaping (_ lhs: T, _ rhs: T) -> Bool) {
+    convenience public init(sorter: @escaping (_ lhs: T, _ rhs: T) -> Bool) {
         self.init()
         self.sorter = sorter
     }
     
-    var entries = [T]()
+    public var entries = [T]()
     
     internal func _add(entry: T) -> Bool {
         if !entries.contains(entry) {
@@ -28,13 +28,13 @@ class List<T: Equatable> {
         }
     }
     
-    func add(entry: T) {
+    public func add(entry: T) {
         if _add(entry: entry) {
             sort()
         }
     }
     
-    func addEntries<S: Sequence>(entries: S) where S.Iterator.Element == T {
+    public func addEntries<S: Sequence>(entries: S) where S.Iterator.Element == T {
         let count = self.entries.count
         for entry in entries {
             let _ = _add(entry: entry)
@@ -44,27 +44,27 @@ class List<T: Equatable> {
         }
     }
     
-    func sort(entry: T) {
+    public func sort(entry: T) {
         let _ = _add(entry: entry)
         sort()
     }
     
-    func sort() {
+    public func sort() {
         entries = entries.sorted(by: sorter)
     }
     
-    func remove(entry: T) {
+    public func remove(entry: T) {
         if let index = entries.index(of: entry) {
             entries.remove(at: index)
         }
     }
     
-    subscript(index: Int) -> T? {
+    public subscript(index: Int) -> T? {
         return (index >= 0 && index < count) ? entries[index] : nil
     }
 }
 
-protocol BaseOrderedContainer {
+public protocol BaseOrderedContainer {
     associatedtype ElementType
     var count: Int { get }
     subscript (safe index: Int) -> ElementType? { get }
@@ -73,21 +73,21 @@ protocol BaseOrderedContainer {
 extension Array: BaseOrderedContainer {}
 
 extension List: BaseOrderedContainer {
-    var count: Int { return entries.count }
-    subscript (safe index: Int) -> T? {
+    public var count: Int { return entries.count }
+    public subscript (safe index: Int) -> T? {
         return entries[safe: index]
     }
 }
 
 extension Array {
-    subscript (safe index: Int) -> Element? {
+    public subscript (safe index: Int) -> Element? {
         return (index >= 0 && index < count) ? self[index] : nil
     }
 }
 
 extension Array where Element: Equatable {
     
-    mutating func remove(_ element: Element) {
+    public mutating func remove(_ element: Element) {
         if let index = index(of: element) {
             self.remove(at: index)
         }
@@ -96,13 +96,13 @@ extension Array where Element: Equatable {
 
 extension Collection {
     
-    func all(_ enumerator: (Iterator.Element) -> Void) {
+    public func all(_ enumerator: (Iterator.Element) -> Void) {
         for element in self {
             enumerator(element)
         }
     }
     
-    subscript (includeElement: (Iterator.Element) -> Bool) -> Iterator.Element? {
+    public subscript (includeElement: (Iterator.Element) -> Bool) -> Iterator.Element? {
         for element in self where includeElement(element) == true {
             return element
         }
@@ -112,7 +112,7 @@ extension Collection {
 
 extension Dictionary {
     
-    func get<T>(_ key: Key) -> T? {
+    public func get<T>(_ key: Key) -> T? {
         return self[key] as? T
     }
 }

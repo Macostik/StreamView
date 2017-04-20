@@ -22,6 +22,7 @@
 		5659D97C1E9D0FC50028C588 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5659D97B1E9D0FC50028C588 /* View+Ext.swift */; };
 		5659D97E1E9D11270028C588 /* ScrollView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5659D97D1E9D11270028C588 /* ScrollView+Ext.swift */; };
 		5659D9801E9D14B50028C588 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5659D97F1E9D14B50028C588 /* List.swift */; };
+		568E16CB1EA8E2C2002703E1 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568E16CA1EA8E2C2002703E1 /* PlaceholderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		5659D97B1E9D0FC50028C588 /* View+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		5659D97D1E9D11270028C588 /* ScrollView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScrollView+Ext.swift"; sourceTree = "<group>"; };
 		5659D97F1E9D14B50028C588 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		568E16CA1EA8E2C2002703E1 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				5659D97B1E9D0FC50028C588 /* View+Ext.swift */,
 				5659D97F1E9D14B50028C588 /* List.swift */,
 				5659D97D1E9D11270028C588 /* ScrollView+Ext.swift */,
+				568E16CA1EA8E2C2002703E1 /* PlaceholderView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568E16CB1EA8E2C2002703E1 /* PlaceholderView.swift in Sources */,
 				5659D9701E9D0E6A0028C588 /* GridLayout.swift in Sources */,
 				5659D9781E9D0E6A0028C588 /* StreamView.swift in Sources */,
 				5659D9711E9D0E6A0028C588 /* MosaicLayout.swift in Sources */,

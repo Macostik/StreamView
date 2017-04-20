@@ -11,20 +11,20 @@ import UIKit
 
 public class SquareGridLayout: StreamLayout {
     
-    var numberOfColumns: Int = 1
-    var size: CGFloat = 0
-    var spacing: CGFloat = 0
-    var isEdgeSeporator = false
+    public var numberOfColumns: Int = 1
+    public var size: CGFloat = 0
+    public var spacing: CGFloat = 0
+    public var isEdgeSeporator = false
     
     internal var currentOffset: CGFloat = 0
     
-    override func prepareLayout(streamView sv: StreamView) {
+    override public func prepareLayout(streamView sv: StreamView) {
         let num = CGFloat(numberOfColumns)
         size = (sv.frame.width - spacing * (num + (isEdgeSeporator ? 1 : -1))) / num
         currentOffset = offset
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let metrics = item.metrics
         if metrics.isSeparator {
             var y = currentOffset + spacing
@@ -57,15 +57,15 @@ public class SquareGridLayout: StreamLayout {
 
 class HorizontalSquareGridLayout: SquareGridLayout {
     
-    override var horizontal: Bool { return true }
+    override public var horizontal: Bool { return true }
     
-    override func prepareLayout(streamView sv: StreamView) {
+    override public func prepareLayout(streamView sv: StreamView) {
         let num = CGFloat(numberOfColumns)
         size = (sv.frame.height - spacing * (num + (isEdgeSeporator ? 1 : -1))) / num
         currentOffset = offset
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         var x = spacing
         var y = spacing
         var column: Int = 0
@@ -85,14 +85,14 @@ class HorizontalSquareGridLayout: SquareGridLayout {
 
 public class SquareLayout: StreamLayout {
     
-    var size: CGFloat = 0
-    var spacing: CGFloat = 0
+    public var size: CGFloat = 0
+    public var spacing: CGFloat = 0
     
-    override func prepareLayout(streamView: StreamView) {
+    override public  func prepareLayout(streamView: StreamView) {
         size = streamView.frame.size.width - spacing*2
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         var y = spacing
         if let previous = item.previous {
             y += previous.frame.maxY
@@ -103,13 +103,13 @@ public class SquareLayout: StreamLayout {
 
 public class HorizontalSquareLayout: SquareLayout {
     
-    override var horizontal: Bool { return true }
+    override public var horizontal: Bool { return true }
     
-    override func prepareLayout(streamView: StreamView) {
+    override public func prepareLayout(streamView: StreamView) {
         size = streamView.frame.size.height - spacing*2
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         var x = spacing
         if let previous = item.previous {
             x += previous.frame.maxX

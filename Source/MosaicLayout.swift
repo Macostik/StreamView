@@ -14,21 +14,21 @@ import UIKit
 let v1_3: CGFloat = 1.0/3.0
 let v2_1_3: CGFloat = 2*v1_3
 
-final class MosaicSlice {
+public final class MosaicSlice {
     
     static let separator = MosaicSlice(items: [[0, 0, v1_3, v1_3], [v1_3, 0, v1_3, v1_3], [2 * v1_3, 0, v1_3, v1_3]])
     
-    let items: [[CGFloat]]
-    init(items: [[CGFloat]]) {
+    public let items: [[CGFloat]]
+    public init(items: [[CGFloat]]) {
         self.items = items
     }
     
-    var numberOfCompletedFrames = 0
+    public var numberOfCompletedFrames = 0
 }
 
 public class MosaicLayout: StreamLayout {
     
-    var spacing: CGFloat = 0
+    public var spacing: CGFloat = 0
     
     private var currentOffset: CGFloat = 0
     private var sliceY: CGFloat = 0
@@ -50,11 +50,11 @@ public class MosaicLayout: StreamLayout {
         }
     }
     
-    override func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
+    override public func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
         return CGSize(width: streamView.width, height: currentOffset)
     }
     
-    override func prepareLayout(streamView sv: StreamView) {
+    override public func prepareLayout(streamView sv: StreamView) {
         sliceY = offset
         currentOffset = offset
         for slice in slices {
@@ -64,7 +64,7 @@ public class MosaicLayout: StreamLayout {
         sliceIndex = 0
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         
         guard item.metrics.isSeparator == false else {
             let frame = CGRect.init(x: 0, y: currentOffset, width: streamView.frame.width, height: item.size)
@@ -120,7 +120,7 @@ public class MosaicLayout: StreamLayout {
         return frame
     }
     
-    override func prepareForNextSection() {
+    override public func prepareForNextSection() {
         if let slice = slice, slice.numberOfCompletedFrames > 0 {
             slice.numberOfCompletedFrames = slice.items.count
             sliceY = currentOffset

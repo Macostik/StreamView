@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource, UIScrollViewDelegate where T.ElementType: Any {
+public class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource, UIScrollViewDelegate where T.ElementType: Any {
     
-    var streamView: StreamView
+    public var streamView: StreamView
     
-    var sectionHeaderMetrics = [StreamMetricsProtocol]()
+    public var sectionHeaderMetrics = [StreamMetricsProtocol]()
     
-    var metrics = [StreamMetricsProtocol]()
+    public var metrics = [StreamMetricsProtocol]()
     
-    var sectionFooterMetrics = [StreamMetricsProtocol]()
+    public var sectionFooterMetrics = [StreamMetricsProtocol]()
     
     deinit {
         if (streamView.delegate as? StreamDataSource) == self {
@@ -25,33 +25,33 @@ class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource,
         }
     }
     
-    var items: T? {
+    public var items: T? {
         didSet {
             didSetItems()
         }
     }
     
-    func didSetItems() {
+    public func didSetItems() {
         reload()
     }
     
-    func reload() {
+    public func reload() {
         if streamView.dataSource as? StreamDataSource == self {
             streamView.reload()
         }
     }
     
-    @discardableResult func addSectionHeaderMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult public func addSectionHeaderMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         sectionHeaderMetrics.append(metrics)
         return metrics
     }
     
-    @discardableResult func addMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult public func addMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         self.metrics.append(metrics)
         return metrics
     }
     
-    @discardableResult func addSectionFooterMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult public func addSectionFooterMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         sectionFooterMetrics.append(metrics)
         return metrics
     }
@@ -65,49 +65,49 @@ class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource,
       
     }
     
-    var numberOfItems: Int?
+    public var numberOfItems: Int?
     
-    var didLayoutItemBlock: ((StreamItem) -> Void)?
+    public var didLayoutItemBlock: ((StreamItem) -> Void)?
     
     private func entryForItem(item: StreamItem) -> Any? {
         return items?[safe: item.position.index]
     }
     
-    func numberOfItemsIn(section: Int) -> Int {
+    public func numberOfItemsIn(section: Int) -> Int {
         return numberOfItems ?? items?.count ?? 0
     }
     
-    func metricsAt(position: StreamPosition) -> [StreamMetricsProtocol] {
+    public func metricsAt(position: StreamPosition) -> [StreamMetricsProtocol] {
         return metrics
     }
     
-    func didLayoutItem(item: StreamItem) {
+    public func didLayoutItem(item: StreamItem) {
         didLayoutItemBlock?(item)
     }
     
-    func entryBlockForItem(item: StreamItem) -> ((StreamItem) -> Any?)? {
+    public func entryBlockForItem(item: StreamItem) -> ((StreamItem) -> Any?)? {
         return { [weak self] item -> Any? in
             return self?.entryForItem(item: item)
         }
     }
     
-    func didChangeContentSize(oldContentSize: CGSize) {}
+    public func didChangeContentSize(oldContentSize: CGSize) {}
     
-    func didLayout() {}
+    public func didLayout() {}
     
-    func headerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
+    public func headerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
         return sectionHeaderMetrics
     }
     
-    func footerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
+    public func footerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
         return sectionFooterMetrics
     }
     
-    func numberOfSections() -> Int {
+    public func numberOfSections() -> Int {
         return 1
     }
     
-    var didEndDecelerating: (() -> ())?
+    public var didEndDecelerating: (() -> ())?
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {

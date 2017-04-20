@@ -17,7 +17,7 @@ typealias ScrollDirectionHandler = (_ isUp: Bool) -> ()
 
 var StreamViewCommonLocksChanged: String = "StreamViewCommonLocksChanged"
 
-protocol StreamViewDataSource: class {
+public protocol StreamViewDataSource: class {
     func numberOfSections() -> Int
     func numberOfItemsIn(section: Int) -> Int
     func metricsAt(position: StreamPosition) -> [StreamMetricsProtocol]
@@ -57,17 +57,31 @@ public class StreamView: UIScrollView {
         return StreamViewLayer.self
     }
     
-    var layout: StreamLayout = StreamLayout()
+    public var layout: StreamLayout = StreamLayout()
     
     private var reloadAfterUnlock = false
     
-    var locked = false
+    public var locked = false
     
-    static var locked = false
+    static public var locked = false
     
     private var items = [StreamItem]()
     
-    weak var dataSource: StreamViewDataSource?
+    public weak var dataSource: StreamViewDataSource?
+    
+    private weak var placeholderView: PlaceholderView? {
+        willSet {
+            newValue?.isHidden = isHidden
+        }
+    }
+    
+    override public var isHidden: Bool {
+        didSet {
+            placeholderView?.isHidden = isHidden
+        }
+    }
+    
+    public var placeholderViewBlock: (() -> PlaceholderView)?
     
     override public var contentInset: UIEdgeInsets  {
         didSet {
@@ -91,7 +105,7 @@ public class StreamView: UIScrollView {
     
     var scrollDirectionChanged: ScrollDirectionHandler = { _ in }
     
-    var trackScrollDirection = false
+    public var trackScrollDirection = false
     
     var direction: ScrollDirection = .Unknown {
         didSet {
@@ -101,7 +115,7 @@ public class StreamView: UIScrollView {
         }
     }
     
-    func didChangeBounds() {
+    public func didChangeBounds() {
         if trackScrollDirection && isTracking && (contentSize.height > height || direction == .Up) {
             direction = panGestureRecognizer.translation(in: self).y > 0 ? .Down : .Up
         }
@@ -110,7 +124,7 @@ public class StreamView: UIScrollView {
         }
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
@@ -121,6 +135,7 @@ public class StreamView: UIScrollView {
     }
     
     private func clear() {
+        placeholderView?.removeFromSuperview()
         for item in items {
             if let view = item.view {
                 view.isHidden = true
@@ -130,36 +145,36 @@ public class StreamView: UIScrollView {
         items.removeAll()
     }
     
-    static func lock() {
+    static public func lock() {
         locked = true
     }
     
-    static func unlock() {
+    static public func unlock() {
         if locked {
             locked = false
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: StreamViewCommonLocksChanged), object: nil)
         }
     }
     
-    func locksChanged() {
+    public func locksChanged() {
         if !locked && !StreamView.locked && reloadAfterUnlock {
             reloadAfterUnlock = false
             reload()
         }
     }
     
-    func lock() {
+    public func lock() {
         locked = true
     }
     
-    func unlock() {
+    public func unlock() {
         if locked {
             locked = false
             locksChanged()
         }
     }
     
-    func reload() {
+    public func reload() {
         
         if locked || StreamView.locked {
             reloadAfterUnlock = true
@@ -226,6 +241,11 @@ public class StreamView: UIScrollView {
             
             layout.prepareForNextSection()
         }
+        if items.isEmpty, let placeholder = placeholderViewBlock {
+            let placeholderView = placeholder()
+            placeholderView.layoutInStreamView(streamView: self)
+            self.placeholderView = placeholderView
+        }
     }
     
     private func addItem(dataSource: StreamViewDataSource? = nil, metrics: StreamMetricsProtocol, position: StreamPosition) -> StreamItem? {
@@ -285,36 +305,36 @@ public class StreamView: UIScrollView {
     
     // MARK: - User Actions
     
-    func visibleItems() -> [StreamItem] {
+    public func visibleItems() -> [StreamItem] {
         return itemsPassingTest { $0.visible }
     }
     
-    func selectedItems() -> [StreamItem] {
+    public func selectedItems() -> [StreamItem] {
         return itemsPassingTest { $0.selected }
     }
     
-    var selectedItem: StreamItem? {
+    public var selectedItem: StreamItem? {
         return itemPassingTest { $0.selected }
     }
     
-    func itemPassingTest(test: (StreamItem) -> Bool) -> StreamItem? {
+    public func itemPassingTest(test: (StreamItem) -> Bool) -> StreamItem? {
         for item in items where test(item) {
             return item
         }
         return nil
     }
     
-    func itemsPassingTest(test: (StreamItem) -> Bool) -> [StreamItem] {
+    public func itemsPassingTest(test: (StreamItem) -> Bool) -> [StreamItem] {
         return items.filter(test)
     }
     
-    func scrollToItemPassingTest( test: (StreamItem) -> Bool, animated: Bool) -> StreamItem? {
+    public func scrollToItemPassingTest( test: (StreamItem) -> Bool, animated: Bool) -> StreamItem? {
         let item = itemPassingTest(test: test)
         scrollToItem(item: item, animated: animated)
         return item
     }
     
-    func scrollToItem(item: StreamItem?, animated: Bool)  {
+    public func scrollToItem(item: StreamItem?, animated: Bool)  {
         guard let item = item else { return }
         let minOffset = minimumContentOffset
         let maxOffset = maximumContentOffset

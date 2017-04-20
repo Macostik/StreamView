@@ -11,28 +11,28 @@ import UIKit
 
 public class GridLayout: StreamLayout {
     
-    var numberOfColumns: Int = 1
-    var spacing: CGFloat = 0
-    var columnSize: CGFloat = 0
+    public var numberOfColumns: Int = 1
+    public var spacing: CGFloat = 0
+    public var columnSize: CGFloat = 0
     
-    var offsets = [CGFloat]()
+    public var offsets = [CGFloat]()
     
-    override func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
+    override public func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
         return CGSize(width: streamView.width, height: offsets.max() ?? 0)
     }
     
-    func position(column: Int) -> CGFloat {
+    public func position(column: Int) -> CGFloat {
         return CGFloat(column) * columnSize
     }
     
-    override func prepareLayout(streamView sv: StreamView) {
+    override public func prepareLayout(streamView sv: StreamView) {
         offsets = Array(repeating: offset, count: numberOfColumns)
         if columnSize == 0 {
             columnSize = 1/CGFloat(numberOfColumns)
         }
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let ratio = item.ratio
         let offset = offsets.min() ?? 0
         let column = offsets.index(of: offset) ?? 0
@@ -58,27 +58,27 @@ public class GridLayout: StreamLayout {
         return frame
     }
     
-    func flatten() {
+    public func flatten() {
         let offset = offsets.max() ?? 0
         for i in 0..<offsets.count {
             offsets[i] = offset
         }
     }
     
-    override func prepareForNextSection() {
+    override public func prepareForNextSection() {
         flatten()
     }
 }
 
 public class HorizontalGridLayout: GridLayout {
     
-    override var horizontal: Bool { return true }
+    override public  var horizontal: Bool { return true }
     
-    override func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
+    override public func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
         return CGSize.init(width: offsets.max() ?? 0, height: streamView.height)
     }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         
         let ratio = item.ratio
         

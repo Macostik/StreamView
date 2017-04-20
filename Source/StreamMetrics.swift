@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol StreamMetricsProtocol: class {
+public protocol StreamMetricsProtocol: class {
     func enqueueView(view: StreamReusableView)
     func dequeueViewWithItem(item: StreamItem) -> StreamReusableView
     func loadView() -> StreamReusableView
@@ -26,40 +26,40 @@ protocol StreamMetricsProtocol: class {
 
 public class StreamMetrics<T: StreamReusableView>: StreamMetricsProtocol {
     
-    init(layoutBlock: ((T) -> Void)? = nil, size: CGFloat = 0) {
+   public init(layoutBlock: ((T) -> Void)? = nil, size: CGFloat = 0) {
         self.layoutBlock = layoutBlock
         self.size = size
     }
     
-    func change( initializer: (StreamMetrics) -> Void) -> StreamMetrics {
+   public func change( initializer: (StreamMetrics) -> Void) -> StreamMetrics {
         initializer(self)
         return self
     }
     
-    var layoutBlock: ((T) -> Void)?
+    public var layoutBlock: ((T) -> Void)?
     
-    var modifyItem: ((StreamItem) -> Void)?
+    public var modifyItem: ((StreamItem) -> Void)?
     
-    var hidden: Bool = false
-    var size: CGFloat = 0
-    var insets: CGRect = CGRect.zero 
-    var ratio: CGFloat = 0
+    public var hidden: Bool = false
+    public var size: CGFloat = 0
+    public var insets: CGRect = CGRect.zero
+    public var ratio: CGFloat = 0
     
-    var isSeparator = false
+    public var isSeparator = false
     
-    var selectable = true
+    public var selectable = true
     
-    var selection: ((T) -> Void)?
+    public var selection: ((T) -> Void)?
     
-    var prepareAppearing: ((StreamItem, T) -> Void)?
+    public var prepareAppearing: ((StreamItem, T) -> Void)?
     
-    var finalizeAppearing: ((StreamItem, T) -> Void)?
+    public var finalizeAppearing: ((StreamItem, T) -> Void)?
     
-    var reusableViews: Set<T> = Set()
+    public var reusableViews: Set<T> = Set()
     
-    var disableMenu = false
+    public var disableMenu = false
     
-    func loadView() -> StreamReusableView {
+    public func loadView() -> StreamReusableView {
         let view = T()
         layoutBlock?(view)
         view.metrics = self
@@ -68,14 +68,14 @@ public class StreamMetrics<T: StreamReusableView>: StreamMetricsProtocol {
         return view
     }
     
-    func findView(item: StreamItem) -> T? {
+    public func findView(item: StreamItem) -> T? {
         for view in reusableViews where view.item?.entry as AnyObject === item.entry as AnyObject {
             return view
         }
         return reusableViews.first
     }
     
-    func dequeueView(item: StreamItem) -> T {
+    public func dequeueView(item: StreamItem) -> T {
         if let view = findView(item: item) {
             reusableViews.remove(view)
             view.didDequeue()
@@ -84,7 +84,7 @@ public class StreamMetrics<T: StreamReusableView>: StreamMetricsProtocol {
         return loadView() as! T
     }
     
-    func dequeueViewWithItem(item: StreamItem) -> StreamReusableView {
+    public func dequeueViewWithItem(item: StreamItem) -> StreamReusableView {
         let view = dequeueView(item: item)
         view.item = item
         UIView.performWithoutAnimation { view.frame = item.frame }
@@ -95,14 +95,14 @@ public class StreamMetrics<T: StreamReusableView>: StreamMetricsProtocol {
         return view
     }
     
-    func enqueueView(view: StreamReusableView) { 
+    public func enqueueView(view: StreamReusableView) {
         if let view = view as? T {
             view.willEnqueue()
             reusableViews.insert(view)
         }
     }
     
-    func select(view: StreamReusableView) {
+    public func select(view: StreamReusableView) {
         if let view = view as? T {
             selection?(view)
         }

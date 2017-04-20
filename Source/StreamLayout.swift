@@ -11,17 +11,17 @@ import UIKit
 
 public class StreamLayout {
     
-    var horizontal: Bool { return false }
+    public var horizontal: Bool { return false }
     
-    var offset: CGFloat = 0
+    public var offset: CGFloat = 0
     
-    var finalized = false
+    public var finalized = false
     
-    func prepareLayout(streamView: StreamView) {
+    public func prepareLayout(streamView: StreamView) {
         finalized = false
     }
     
-    func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
+    public func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
         if horizontal {
             return CGSize.init(width: item.frame.maxX, height: streamView.frame.height)
         } else {
@@ -29,7 +29,7 @@ public class StreamLayout {
         }
     }
     
-    func recursivelyLayoutItem(item: StreamItem, streamView: StreamView) {
+    public func recursivelyLayoutItem(item: StreamItem, streamView: StreamView) {
         var next: StreamItem? = item
         while let item = next {
             item.frame = frameForItem(item: item, streamView: streamView)
@@ -37,20 +37,20 @@ public class StreamLayout {
         }
     }
     
-    func layoutItem(item: StreamItem, streamView: StreamView) {
+    public func layoutItem(item: StreamItem, streamView: StreamView) {
         item.frame = frameForItem(item: item, streamView: streamView)
     }
     
-    func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let size = item.size
         let insets = item.insets
         let offset = item.previous?.frame.maxY ?? self.offset
         return CGRect.init(x: insets.origin.x, y: offset + insets.origin.y, width: streamView.frame.width - insets.origin.x - insets.width, height: size + insets.height)
     }
     
-    func prepareForNextSection() { }
+    public func prepareForNextSection() { }
     
-    func finalizeLayout() {
+    public func finalizeLayout() {
         prepareForNextSection()
         finalized = true
     }
@@ -58,9 +58,9 @@ public class StreamLayout {
 
 public class HorizontalStreamLayout: StreamLayout {
     
-    override var horizontal: Bool { return true }
+    override public var horizontal: Bool { return true }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let size = item.size
         let insets = item.insets
         let offset = item.previous?.frame.maxX ?? self.offset
@@ -70,9 +70,9 @@ public class HorizontalStreamLayout: StreamLayout {
 
 public class HorizontalViсeVersaStreamLayout: StreamLayout {
     
-    override var horizontal: Bool { return true }
+    override public var horizontal: Bool { return true }
     
-    override func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let size = item.size
         let insets = item.insets
         let offset = item.previous?.frame.minX ?? UIScreen.main.bounds.width

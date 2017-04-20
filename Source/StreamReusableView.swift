@@ -11,17 +11,17 @@ import UIKit
 
 public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     
-    func setEntry(entry: Any?) {}
-    func getEntry() -> Any? { return nil }
+    public func setEntry(entry: Any?) {}
+    public func getEntry() -> Any? { return nil }
     
-    var metrics: StreamMetricsProtocol?
-    var item: StreamItem?
-    var selected: Bool = false
-    let selectTapGestureRecognizer = UITapGestureRecognizer()
+    public var metrics: StreamMetricsProtocol?
+    public var item: StreamItem?
+    public var selected: Bool = false
+    public let selectTapGestureRecognizer = UITapGestureRecognizer()
     
-    func layoutWithMetrics(metrics: StreamMetricsProtocol) {}
+    public func layoutWithMetrics(metrics: StreamMetricsProtocol) {}
     
-    func didLoad() {
+    public func didLoad() {
         selectTapGestureRecognizer.addTarget(self, action: #selector(self.selectAction))
         selectTapGestureRecognizer.delegate = self
         self.addGestureRecognizer(selectTapGestureRecognizer)
@@ -31,11 +31,11 @@ public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
         metrics?.select(view: self)
     }
     
-    func didDequeue() {}
+    public func didDequeue() {}
     
-    func willEnqueue() {}
+    public func willEnqueue() {}
     
-    func resetup() {}
+    public func resetup() {}
     
     // MARK: - UIGestureRecognizerDelegate
     
@@ -46,23 +46,23 @@ public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
 
 class EntryStreamReusableView<T: Any>: StreamReusableView {
     
-    init() {
+    public init() {
         super.init(frame: CGRect.zero)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setEntry(entry: Any?) {
+    override public func setEntry(entry: Any?) {
         self.entry = entry as? T
     }
     
-    override func getEntry() -> Any? {
+    override public func getEntry() -> Any? {
         return entry
     }
     
-    var entry: T? {
+    public var entry: T? {
         didSet {
             resetup()
         }
