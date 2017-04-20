@@ -54,25 +54,25 @@ open class EntryStreamReusableView<T: Any>: StreamReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func setEntry(entry: Any?) {
+    override open func setEntry(entry: Any?) {
         self.entry = entry as? T
     }
     
-    override public func getEntry() -> Any? {
+    override open func getEntry() -> Any? {
         return entry
     }
     
-    public var entry: T? {
+    open var entry: T? {
         didSet {
             resetup()
         }
     }
     
-    public func setup(entry: T) {}
+    open func setup(entry: T) {}
     
-    public func setupEmpty() {}
+    open func setupEmpty() {}
     
-    override public func resetup() {
+    override open func resetup() {
         if let entry = entry {
             setup(entry: entry)
         } else {

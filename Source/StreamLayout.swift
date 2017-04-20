@@ -11,17 +11,17 @@ import UIKit
 
 open class StreamLayout {
     
-    public var horizontal: Bool { return false }
+    open var horizontal: Bool { return false }
     
-    public var offset: CGFloat = 0
+    open var offset: CGFloat = 0
     
-    public var finalized = false
+    open var finalized = false
     
-    public func prepareLayout(streamView: StreamView) {
+    open func prepareLayout(streamView: StreamView) {
         finalized = false
     }
     
-    public func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
+    open func contentSize(item: StreamItem, streamView: StreamView) -> CGSize {
         if horizontal {
             return CGSize.init(width: item.frame.maxX, height: streamView.frame.height)
         } else {
@@ -29,7 +29,7 @@ open class StreamLayout {
         }
     }
     
-    public func recursivelyLayoutItem(item: StreamItem, streamView: StreamView) {
+    open func recursivelyLayoutItem(item: StreamItem, streamView: StreamView) {
         var next: StreamItem? = item
         while let item = next {
             item.frame = frameForItem(item: item, streamView: streamView)
@@ -37,20 +37,20 @@ open class StreamLayout {
         }
     }
     
-    public func layoutItem(item: StreamItem, streamView: StreamView) {
+    open func layoutItem(item: StreamItem, streamView: StreamView) {
         item.frame = frameForItem(item: item, streamView: streamView)
     }
     
-    public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+    open func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
         let size = item.size
         let insets = item.insets
         let offset = item.previous?.frame.maxY ?? self.offset
         return CGRect.init(x: insets.origin.x, y: offset + insets.origin.y, width: streamView.frame.width - insets.origin.x - insets.width, height: size + insets.height)
     }
     
-    public func prepareForNextSection() { }
+    open func prepareForNextSection() { }
     
-    public func finalizeLayout() {
+    open func finalizeLayout() {
         prepareForNextSection()
         finalized = true
     }

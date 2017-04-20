@@ -25,33 +25,33 @@ open class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSo
         }
     }
     
-    public var items: T? {
+    open var items: T? {
         didSet {
             didSetItems()
         }
     }
     
-    public func didSetItems() {
+    open func didSetItems() {
         reload()
     }
     
-    public func reload() {
+    open func reload() {
         if streamView.dataSource as? StreamDataSource == self {
             streamView.reload()
         }
     }
     
-    @discardableResult public func addSectionHeaderMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult open func addSectionHeaderMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         sectionHeaderMetrics.append(metrics)
         return metrics
     }
     
-    @discardableResult public func addMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult open func addMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         self.metrics.append(metrics)
         return metrics
     }
     
-    @discardableResult public func addSectionFooterMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
+    @discardableResult open func addSectionFooterMetrics<T: StreamMetricsProtocol>(metrics: T) -> T {
         sectionFooterMetrics.append(metrics)
         return metrics
     }
@@ -65,57 +65,57 @@ open class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSo
       
     }
     
-    public var numberOfItems: Int?
+    open var numberOfItems: Int?
     
-    public var didLayoutItemBlock: ((StreamItem) -> Void)?
+    open var didLayoutItemBlock: ((StreamItem) -> Void)?
     
     private func entryForItem(item: StreamItem) -> Any? {
         return items?[safe: item.position.index]
     }
     
-    public func numberOfItemsIn(section: Int) -> Int {
+    open func numberOfItemsIn(section: Int) -> Int {
         return numberOfItems ?? items?.count ?? 0
     }
     
-    public func metricsAt(position: StreamPosition) -> [StreamMetricsProtocol] {
+    open func metricsAt(position: StreamPosition) -> [StreamMetricsProtocol] {
         return metrics
     }
     
-    public func didLayoutItem(item: StreamItem) {
+    open func didLayoutItem(item: StreamItem) {
         didLayoutItemBlock?(item)
     }
     
-    public func entryBlockForItem(item: StreamItem) -> ((StreamItem) -> Any?)? {
+    open func entryBlockForItem(item: StreamItem) -> ((StreamItem) -> Any?)? {
         return { [weak self] item -> Any? in
             return self?.entryForItem(item: item)
         }
     }
     
-    public func didChangeContentSize(oldContentSize: CGSize) {}
+    open func didChangeContentSize(oldContentSize: CGSize) {}
     
-    public func didLayout() {}
+    open func didLayout() {}
     
-    public func headerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
+    open func headerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
         return sectionHeaderMetrics
     }
     
-    public func footerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
+    open func footerMetricsIn(section: Int) -> [StreamMetricsProtocol] {
         return sectionFooterMetrics
     }
     
-    public func numberOfSections() -> Int {
+    open func numberOfSections() -> Int {
         return 1
     }
     
-    public var didEndDecelerating: (() -> ())?
+    open var didEndDecelerating: (() -> ())?
     
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             didEndDecelerating?()
         }
     }
     
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         didEndDecelerating?()
     }
 }
