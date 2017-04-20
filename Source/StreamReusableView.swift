@@ -11,17 +11,17 @@ import UIKit
 
 open class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     
-    public func setEntry(entry: Any?) {}
-    public func getEntry() -> Any? { return nil }
+    open func setEntry(entry: Any?) {}
+    open func getEntry() -> Any? { return nil }
     
-    public var metrics: StreamMetricsProtocol?
-    public var item: StreamItem?
-    public var selected: Bool = false
-    public let selectTapGestureRecognizer = UITapGestureRecognizer()
+    open var metrics: StreamMetricsProtocol?
+    open var item: StreamItem?
+    open var selected: Bool = false
+    open let selectTapGestureRecognizer = UITapGestureRecognizer()
     
-    public func layoutWithMetrics(metrics: StreamMetricsProtocol) {}
+    open func layoutWithMetrics(metrics: StreamMetricsProtocol) {}
     
-    public func didLoad() {
+    open func didLoad() {
         selectTapGestureRecognizer.addTarget(self, action: #selector(self.selectAction))
         selectTapGestureRecognizer.delegate = self
         self.addGestureRecognizer(selectTapGestureRecognizer)
@@ -31,11 +31,11 @@ open class StreamReusableView: UIView, UIGestureRecognizerDelegate {
         metrics?.select(view: self)
     }
     
-    public func didDequeue() {}
+    open func didDequeue() {}
     
-    public func willEnqueue() {}
+    open func willEnqueue() {}
     
-    public func resetup() {}
+    open func resetup() {}
     
     // MARK: - UIGestureRecognizerDelegate
     
