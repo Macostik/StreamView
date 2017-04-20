@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource, UIScrollViewDelegate where T.ElementType: Any {
+open class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSource, UIScrollViewDelegate where T.ElementType: Any {
     
     public var streamView: StreamView
     

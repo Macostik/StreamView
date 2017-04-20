@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
+open class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     
     public func setEntry(entry: Any?) {}
     public func getEntry() -> Any? { return nil }
@@ -39,12 +39,12 @@ public class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     
     // MARK: - UIGestureRecognizerDelegate
     
-    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer != selectTapGestureRecognizer || metrics?.selectable ?? false
     }
 }
 
-public class EntryStreamReusableView<T: Any>: StreamReusableView {
+open class EntryStreamReusableView<T: Any>: StreamReusableView {
     
     public init() {
         super.init(frame: CGRect.zero)

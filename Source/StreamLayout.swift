@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class StreamLayout {
+open class StreamLayout {
     
     public var horizontal: Bool { return false }
     

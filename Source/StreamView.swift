@@ -40,11 +40,11 @@ extension StreamViewDataSource {
 }
 
 
-class StreamViewLayer: CALayer {
+public class StreamViewLayer: CALayer {
     
     var didChangeBounds: (() -> ())?
     
-    override var bounds: CGRect {
+    override public var bounds: CGRect {
         didSet {
             didChangeBounds?()
         }
