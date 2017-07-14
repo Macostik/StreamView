@@ -52,8 +52,8 @@ public func ==(lhs: StreamPosition, rhs: StreamPosition) -> Bool {
 }
 
 public struct StreamPosition: Equatable {
-    let section: Int
-    let index: Int
+    public let section: Int
+    public let index: Int
     static let zero = StreamPosition(section: 0, index: 0)
 }
 
