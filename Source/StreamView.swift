@@ -243,7 +243,6 @@ public class StreamView: UIScrollView {
         }
         if items.isEmpty, let placeholder = placeholderViewBlock {
             let placeholderView = placeholder()
-            placeholderView.layoutInStreamView(streamView: self)
             self.placeholderView = placeholderView
         }
     }
