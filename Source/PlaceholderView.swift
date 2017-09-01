@@ -11,9 +11,6 @@ import Foundation
 
 public class PlaceholderView: UIView {
     
-    public let textLabel = UILabel()
-    public let iconLabel = UILabel()
-    
     static public func placeholderView(specify views: @escaping (PlaceholderView) -> ()) -> (() -> PlaceholderView) {
         return {
             let view = PlaceholderView()
