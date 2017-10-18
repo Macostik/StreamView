@@ -97,7 +97,7 @@ public class StreamView: UIScrollView {
     }
     
     private func setup() {
-        (layer as! StreamViewLayer).didChangeBounds = { [unowned self] _ in
+        (layer as! StreamViewLayer).didChangeBounds = { [unowned self] in
             self.didChangeBounds()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(StreamView.locksChanged), name: NSNotification.Name(rawValue: StreamViewCommonLocksChanged), object: nil)
@@ -156,7 +156,7 @@ public class StreamView: UIScrollView {
         }
     }
     
-    public func locksChanged() {
+    @objc public func locksChanged() {
         if !locked && !StreamView.locked && reloadAfterUnlock {
             reloadAfterUnlock = false
             reload()
