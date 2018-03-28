@@ -17,7 +17,7 @@ public enum PositionScroll {
     case top, middle, bottom
 }
 
-typealias ScrollDirectionHandler = (_ isUp: Bool) -> ()
+typealias ScrollDirectionHandler = (_ isUp: Bool) -> Void
 
 var StreamViewCommonLocksChanged: String = "StreamViewCommonLocksChanged"
 
@@ -43,10 +43,9 @@ extension StreamViewDataSource {
     func footerMetricsIn(section: Int) -> [StreamMetricsProtocol] { return [] }
 }
 
-
 public class StreamViewLayer: CALayer {
     
-    var didChangeBounds: (() -> ())?
+    var didChangeBounds: (() -> Void)?
     
     override public var bounds: CGRect {
         didSet {
@@ -87,7 +86,7 @@ public class StreamView: UIScrollView {
     
     public var placeholderViewBlock: (() -> PlaceholderView)?
     
-    override public var contentInset: UIEdgeInsets  {
+    override public var contentInset: UIEdgeInsets {
         didSet {
             if oldValue != contentInset && items.count == 1 && layout.finalized {
                 reload()
@@ -97,7 +96,7 @@ public class StreamView: UIScrollView {
     
     deinit {
         delegate = nil
-        NotificationCenter.default.removeObserver(self, name:NSNotification.Name(rawValue: StreamViewCommonLocksChanged), object:nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: StreamViewCommonLocksChanged), object: nil)
     }
     
     private func setup() {
@@ -231,7 +230,7 @@ public class StreamView: UIScrollView {
             }
             
             for i in 0..<dataSource.numberOfItemsIn(section: section) {
-                let position = StreamPosition(section: section, index: i);
+                let position = StreamPosition(section: section, index: i)
                 for metrics in dataSource.metricsAt(position: position) {
                     if let item = addItem(dataSource: dataSource, metrics: metrics, position: position) {
                         dataSource.didLayoutItem(item: item)
@@ -331,13 +330,17 @@ public class StreamView: UIScrollView {
         return items.filter(test)
     }
     
-    @discardableResult public func scrollToItemPassingTest( test: (StreamItem) -> Bool, positionScroll: PositionScroll = .middle, animated: Bool) -> StreamItem? {
+    public func selectSingleItem(item: StreamItem) {
+        _ = items.map({ $0.selected = $0.position.index == item.position.index })
+    }
+    
+    public func scrollToItemPassingTest( test: (StreamItem) -> Bool, positionScroll: PositionScroll = .middle, animated: Bool) -> StreamItem? {
         let item = itemPassingTest(test: test)
         scrollToItem(item: item, positionScroll: positionScroll, animated: animated)
         return item
     }
     
-    public func scrollToItem(item: StreamItem?, positionScroll: PositionScroll = .middle, animated: Bool)  {
+    public func scrollToItem(item: StreamItem?, positionScroll: PositionScroll = .middle, animated: Bool) {
         guard let item = item else { return }
         let minOffset = minimumContentOffset
         let maxOffset = maximumContentOffset
@@ -382,4 +385,3 @@ public class StreamView: UIScrollView {
         return true
     }
 }
-
