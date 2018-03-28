@@ -331,7 +331,7 @@ public class StreamView: UIScrollView {
     }
     
     public func selectSingleItem(item: StreamItem) {
-        _ = items.map({ $0.selected = $0.position.index == item.position.index })
+        _ = items.map({ $0.selected = $0.position.index == item.position.index && !item.selected  })
     }
     
     public func scrollToItemPassingTest( test: (StreamItem) -> Bool, positionScroll: PositionScroll = .middle, animated: Bool) -> StreamItem? {
