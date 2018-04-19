@@ -312,7 +312,7 @@ public class StreamView: UIScrollView {
     }
     
     public func selectedItems() -> [StreamItem] {
-        return itemPassingTest { $0.selected && $0.entry != nil }
+        return itemsPassingTest { $0.selected && $0.entry != nil }
     }
     
     public var selectedItem: StreamItem? {
