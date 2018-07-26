@@ -326,7 +326,7 @@ public class StreamView: UIScrollView {
         return nil
     }
     
-    public func itemsPassingTest(test: (StreamItem) -> Bool) -> [StreamItem] {
+    @discardableResult public func itemsPassingTest(test: (StreamItem) -> Bool) -> [StreamItem] {
         return items.filter(test)
     }
     
@@ -334,7 +334,7 @@ public class StreamView: UIScrollView {
         _ = items.map({ $0.selected = $0.position.index == item.position.index && !item.selected  })
     }
     
-    public func scrollToItemPassingTest( test: (StreamItem) -> Bool, positionScroll: PositionScroll = .middle, animated: Bool) -> StreamItem? {
+    @discardableResult public func scrollToItemPassingTest( test: (StreamItem) -> Bool, positionScroll: PositionScroll = .middle, animated: Bool) -> StreamItem? {
         let item = itemPassingTest(test: test)
         scrollToItem(item: item, positionScroll: positionScroll, animated: animated)
         return item
