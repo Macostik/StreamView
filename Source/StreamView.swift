@@ -43,7 +43,7 @@ extension StreamViewDataSource {
 
 public class StreamViewLayer: CALayer {
     
-    var didChangeBounds: (() -> Void)?
+    public var didChangeBounds: (() -> Void)?
     
     override public var bounds: CGRect {
         didSet {
