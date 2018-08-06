@@ -17,8 +17,6 @@ public enum PositionScroll {
     case top, middle, bottom
 }
 
-typealias ScrollDirectionHandler = (_ isUp: Bool) -> Void
-
 var StreamViewCommonLocksChanged: String = "StreamViewCommonLocksChanged"
 
 public protocol StreamViewDataSource: class {
@@ -106,14 +104,14 @@ public class StreamView: UIScrollView {
         NotificationCenter.default.addObserver(self, selector: #selector(StreamView.locksChanged), name: NSNotification.Name(rawValue: StreamViewCommonLocksChanged), object: nil)
     }
     
-    var scrollDirectionChanged: ScrollDirectionHandler = { _ in }
+    public var scrollDirectionChanged: ((_ isUp: Bool) -> Void)?
     
     public var trackScrollDirection = false
     
     var direction: ScrollDirection = .Unknown {
         didSet {
             if direction != oldValue {
-                scrollDirectionChanged(direction == .Up)
+                scrollDirectionChanged?(direction == .Up)
             }
         }
     }
