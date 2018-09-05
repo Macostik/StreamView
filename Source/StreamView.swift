@@ -64,6 +64,8 @@ public class StreamView: UIScrollView {
     
     public var locked = false
     
+    public var forceShowPlaceholder = true
+    
     static public var locked = false
     
     private var items = [StreamItem]()
@@ -242,7 +244,7 @@ public class StreamView: UIScrollView {
             
             layout.prepareForNextSection()
         }
-        if items.isEmpty, let placeholder = placeholderViewBlock {
+        if items.isEmpty || forceShowPlaceholder, let placeholder = placeholderViewBlock {
             let placeholderView = placeholder()
             self.placeholderView = placeholderView
         }
