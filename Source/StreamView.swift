@@ -64,7 +64,7 @@ public class StreamView: UIScrollView {
     
     public var locked = false
     
-    public var forceShowPlaceholder = true
+    public var forceShowPlaceholder = false
     
     static public var locked = false
     
