@@ -72,7 +72,7 @@ public class StreamView: UIScrollView {
     
     public weak var dataSource: StreamViewDataSource?
     
-    private weak var placeholderView: PlaceholderView? {
+    public weak var placeholderView: PlaceholderView? {
         willSet {
             newValue?.isHidden = isHidden
         }
