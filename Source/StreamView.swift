@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum ScrollDirection {
+public enum ScrollDirection {
     case Unknown, Up, Down
 }
 
@@ -110,7 +110,7 @@ public class StreamView: UIScrollView {
     
     public var trackScrollDirection = false
     
-    var direction: ScrollDirection = .Unknown {
+    public var direction: ScrollDirection = .Unknown {
         didSet {
             if direction != oldValue {
                 scrollDirectionChanged?(direction == .Up)
