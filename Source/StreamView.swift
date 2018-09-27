@@ -107,6 +107,7 @@ public class StreamView: UIScrollView {
     }
     
     public var scrollDirectionChanged: ((_ isUp: Bool) -> Void)?
+    public var directionHelper: ((_ isUp: Bool) -> Void)?
     
     public var trackScrollDirection = false
     
@@ -121,6 +122,7 @@ public class StreamView: UIScrollView {
     public func didChangeBounds() {
         if trackScrollDirection && isTracking && (contentSize.height > height || direction == .Up) {
             direction = panGestureRecognizer.translation(in: self).y > 0 ? .Down : .Up
+            directionHelper?(direction == .Up)
         }
         if layout.finalized {
             updateVisibility()

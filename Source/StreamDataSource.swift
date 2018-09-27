@@ -108,10 +108,10 @@ open class StreamDataSource<T: BaseOrderedContainer>: NSObject, StreamViewDataSo
     }
     
     open var didEndDecelerating: (() -> ())?
-    open var willBeginScrolling: (() -> ())?
+    open var willBeginDragging: (() -> ())?
     
     open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        willBeginScrolling?()
+        willBeginDragging?()
     }
     
     open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
