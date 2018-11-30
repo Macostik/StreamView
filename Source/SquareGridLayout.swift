@@ -117,3 +117,23 @@ public class HorizontalSquareLayout: SquareLayout {
         return CGRect(origin: CGPoint.init(x: x, y: spacing), size: CGSize.init(width: size, height: size))
     }
 }
+
+public class HorizontalAspectRatioLayout: SquareLayout {
+    
+    override public var horizontal: Bool { return true }
+    public var aspectRationCoficient: CGFloat = 1.0
+    
+    override public func prepareLayout(streamView: StreamView) {
+        size = streamView.frame.size.height - spacing*2
+    }
+    
+    override public func frameForItem(item: StreamItem, streamView: StreamView) -> CGRect {
+        var x = spacing
+        if let previous = item.previous {
+            x += previous.frame.maxX
+        }
+        return CGRect(origin: CGPoint.init(x: x, y: spacing),
+                      size: CGSize.init(width: size * aspectRationCoficient,
+                                        height: size))
+    }
+}
