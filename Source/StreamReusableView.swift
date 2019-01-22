@@ -17,7 +17,7 @@ open class StreamReusableView: UIView, UIGestureRecognizerDelegate {
     open var metrics: StreamMetricsProtocol?
     open var item: StreamItem?
     open var selected: Bool = false
-    open let selectTapGestureRecognizer = UITapGestureRecognizer()
+    public let selectTapGestureRecognizer = UITapGestureRecognizer()
     
     open func layoutWithMetrics(metrics: StreamMetricsProtocol) {}
     
