@@ -31,7 +31,7 @@ public protocol StreamViewDataSource: class {
     func footerMetricsIn(section: Int) -> [StreamMetricsProtocol]
 }
 
-extension StreamViewDataSource {
+public extension StreamViewDataSource {
     func numberOfSections() -> Int { return 1 }
     func didLayoutItem(item: StreamItem) { }
     func entryBlockForItem(item: StreamItem) -> ((StreamItem) -> Any?)? { return nil }
